@@ -1,6 +1,14 @@
 # iiitb_freqdivider
 
-This is a frequency divider model which provide frequency division upto 16 of the input clock.
+
+This is a frequency divider model which provide frequency division upto 16 of the input clock. This model will contain a 4 bit number lines to select by which factor does the input frequency has to be divided. It is simulated using verilog, synthesis is performed using yosys.
+A frequency divider divides an input frequency into an output frequency based on the factor used for the division. A phase lock loop, which produces multiples of a reference frequency, is one of the well-known applications of a frequency divider.
+It is essentially utilised in any application that calls for frequency matching and frequency downscaling.
+
+![1](https://user-images.githubusercontent.com/100370090/194916636-5e66e23a-854b-4205-b20c-c6f5bc9c80a5.png)
+
+![2](https://user-images.githubusercontent.com/100370090/194916677-18dd6568-e604-45e0-adc2-ad426f361fe0.png)
+
 
 
 ## Description
