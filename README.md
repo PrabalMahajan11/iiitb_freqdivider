@@ -23,15 +23,20 @@ $   sudo apt-get update
 $   sudo apt-get install iverilog gtkwave
 
 ```
+# Pre-Synthesis
 ## Instructions to run
 ```
 $   sudo apt install -y git
-$   git clone (https://github.com/PrabalMahajan11/iiitb_clockfpga)
-$   cd iiitb_clockfpga
-$   iverilog iiitb_clockfpga.v iiitb_clockfpga_tb.v
+$   git clone https://github.com/PrabalMahajan11/iiitb_freqdivider
+$   cd iiitb_freqdiv
+$   iverilog iiitb_freqdiv.v iiitb_freqdiv_tb.v
 $   ./a.out
 $   gtkwave test.vcd
 ```
+
+![3](https://user-images.githubusercontent.com/100370090/198248250-6929e623-a30d-495c-8155-2b2483ff597b.png)
+
+
 
 # Synthesis of Verilog
 Synthesis is a process by which an abstract specification of desired circuit behavior, typically at register transfer level (RTL), is turned into a design implementation in terms of logic gates, typically by a computer program called a synthesis tool. The program we use is called Yosys.
@@ -40,7 +45,7 @@ Synthesis is a process by which an abstract specification of desired circuit beh
 Yosys is an open-source Verilog synthesis framework. It presently offers a fundamental set of synthesis algorithms for numerous application domains and has extensive Verilog-2005 support. By combining the existing passes (algorithms) using synthesis scripts and adding other passes as necessary by extending the Yosys C++ code base, Yosys may be modified to carry out any synthesis job.
 
 To install Yosys, follow the instructions given in the refered GitHub repository: https://github.com/YosysHQ/yosys
-
+# Post-Synthesis
 ## Instructions for Synthesis 
 Create a Yosys script yosys_run.sh in the cloned /iiitb_clockfpga directory and type in the following code into it:
 
@@ -48,10 +53,10 @@ Create a Yosys script yosys_run.sh in the cloned /iiitb_clockfpga directory and 
 # read design
 
 read_liberty -lib lib/sky130_fd_sc_hd__tt_025C_1v80.lib
-read_verilog iiitb_clockfpga.v
+read_verilog iiitb_freqdiv.v
 
 # generic synthesis
-synth -top iiitb_clockfpga
+synth -top iiitb_freqdiv
 
 # mapping to mycells.lib
 dfflibmap -liberty ./lib/sky130_fd_sc_hd__tt_025C_1v80.lib
@@ -61,7 +66,9 @@ clean
 flatten
 
 # write synthesized design
-write_verilog -noattr iiitb_clockfpga_synth.v
+write_verilog -noattr iiitb_freqdiv_netlist.v
+
+
 
 stat
 show
@@ -84,7 +91,7 @@ Gate level Simulation(GLS) is done at the late level of Design cycle. This is ru
 Run the following commands in the terminal to do a gate level simulation of the design:
 
 ```
-$ iverilog -DFUNCTIONAL -DUNIT_DELAY=#1 ./verilog_model/primitives.v ./verilog_model/sky130_fd_sc_hd.v iiitb_clockfpga_synth.v iiitb_clockfpga_tb.v
+$ iverilog -DFUNCTIONAL -DUNIT_DELAY=#1 ./verilog_model/primitives.v ./verilog_model/sky130_fd_sc_hd.v iiitb_freqdiv_netlist.v iiitb_freqdiv_tb.v
 $ ./a.out
 $ gtkwave test.vcd
 
